@@ -87,21 +87,7 @@ WelcomeScreen.options = {
   }
 }
 
-const TestScreen = () => {
-  return(
-    <View>
-      <Logo/>
-      <Section title="Test Section">
-        Wow so awesome!
-      </Section>
-    </View>
-  )
-}
-TestScreen.options = {
-  topBar:{
-    title:{text:"This should also have changed"}
-  }
-}
+
 
 Navigation.events().registerAppLaunchedListener(()=>{
   Navigation.setRoot({
@@ -144,7 +130,7 @@ Navigation.registerComponent('com.MouseDroid.WelcomeScreen', () => WelcomeScreen
 Navigation.registerComponent('com.MouseDroid.TestScreen', () => TestScreen);
 
 
-export default WelcomeScreen;
+export default TestScreen;
 export {
   TestScreen
 }
