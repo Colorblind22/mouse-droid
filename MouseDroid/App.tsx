@@ -74,6 +74,17 @@ const ExpandableNetwork = ({ item }) => {
     setExpanded(!expanded);
   };
 
+  // require doesnt like adding vars?
+  const Images = {
+    1: require('./images/WiFi_1.png'),
+    2: require('./images/WiFi_2.png'),
+    3: require('./images/WiFi_3.png'),
+    4: require('./images/WiFi_4.png')
+  };
+  const getImage = (id) => {
+      return Images[id]
+  };
+
   return (
     <View style={{  }}>
       <View style={{ paddingBottom: 25 }}>
@@ -90,7 +101,7 @@ const ExpandableNetwork = ({ item }) => {
                 marginTop: 15,
                 position: 'absolute'
               }}
-              source={require('./images/WiFi_4.png')} 
+              source={getImage(item.strength)} 
             />
             <Text style={styles.listText}> 
               {item.name} 
@@ -98,7 +109,23 @@ const ExpandableNetwork = ({ item }) => {
             
             {expanded && ( 
                 <View style={{ paddingTop: 25 }}>
-                  <Button title="Connect"/>
+                  <TouchableOpacity 
+                  onPress={toggleExpand}
+                  style={{   
+                    width: 200, 
+                    height: 50, 
+                    paddingVertical: 5,
+                    backgroundColor:'#FBB03B',
+                    borderRadius: 40, }} 
+                  >
+                    <Text style={{
+                      paddingHorizontal: 50,
+                      fontSize: 30,
+                      color:'#fff',}}
+                    > 
+                      Connect 
+                    </Text>
+                  </TouchableOpacity>
                 </View>
             )} 
           </TouchableOpacity>
