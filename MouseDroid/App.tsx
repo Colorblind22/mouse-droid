@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
   Button,
+  TouchableOpacity,
   FlatList
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
@@ -41,20 +42,6 @@ function Logo()
   )
 }
 
-const ExpandableNetwork = ({ item }) => {
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleExpand = () => {
-    setExpanded(!expanded);
-  };
-
-  return (
-    <View>
-
-    </View>
-  );
-};
-
 // maybe we make our own library file so we can share tags and stylesheets between screens
 
 /* ^ defining your own tag?
@@ -79,20 +66,67 @@ if first
 Navigation.registerComponent('com.MouseDroid.name_of_screen', () => name_of_screen)
 fi
 */
-const NetworkList = ({ data }) => {
 
+const ExpandableNetwork = ({ item }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <View style={{  }}>
+      <View style={{ paddingBottom: 25 }}>
+        <View>
+          <TouchableOpacity 
+            onPress={toggleExpand}
+            style={styles.nextworkButton} 
+          > 
+            <Image
+              style={{     
+                width: 52,
+                height: 38,
+                marginLeft: 20,
+                marginTop: 15,
+                position: 'absolute'
+              }}
+              source={require('./images/WiFi_4.png')} 
+            />
+            <Text style={styles.listText}> 
+              {item.name} 
+            </Text>
+            
+            {expanded && ( 
+                <View style={{ paddingTop: 25 }}>
+                  <Button title="Connect"/>
+                </View>
+            )} 
+          </TouchableOpacity>
+          
+ 
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const NetworkList = ({ data }) => {
+  const [expandedId, setExpandedNetwork] = useState();
+  
   return (
     <View style={{ alignItems: 'center', paddingTop: 25, height: 450}}>
     
       <FlatList 
         data={data} 
         renderItem={({ item }) => (
-          <View style={{ paddingBottom: 25 }}>
-            <View style={styles.nextworkButton}>
-              <Text style={styles.listText}> {item.name} </Text>
-            </View>
-          </View>
-        )} 
+
+            
+          
+            <ExpandableNetwork item={item}/>
+        
+
+          
+        )}
         keyExtractor={(item) => item.id.toString()} 
       /> 
 
@@ -208,6 +242,9 @@ TestScreen.options = {
   }
 }
 
+Navigation.registerComponent('com.MouseDroid.WelcomeScreen', () => WelcomeScreen);
+Navigation.registerComponent('com.MouseDroid.TestScreen', () => TestScreen);
+ 
 Navigation.events().registerAppLaunchedListener(()=>{
   Navigation.setRoot({
       root:{
@@ -276,18 +313,19 @@ const styles = StyleSheet.create({
     color:'#fff',
   },
   listText: {
-    width: 350,
-    height: 80,
-    paddingTop: 22,
-    paddingLeft: 50,
+    //width: 350,
+    //height: 80,
+    paddingTop: 20,
+
     fontSize: 23,
     color:'#000',
   },
   nextworkButton: { 
-    width: 350,
-    height: 80,
+    elevation: 2,
+    paddingBottom: 20,
+    paddingHorizontal: 90,
     backgroundColor:'#EB8C1E',
-    borderRadius: 75,
+    borderRadius: 40,
   },
   listArea: {
     marginTop: 30,
@@ -298,8 +336,6 @@ const styles = StyleSheet.create({
   }
 });
 
-Navigation.registerComponent('com.MouseDroid.WelcomeScreen', () => WelcomeScreen);
-Navigation.registerComponent('com.MouseDroid.TestScreen', () => TestScreen);
 
 
 export default WelcomeScreen;
