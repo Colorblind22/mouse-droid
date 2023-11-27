@@ -1,71 +1,14 @@
-import React, {useState, Component } from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
   StyleSheet,
   Image,
   ImageBackground,
-  Button,
   TouchableOpacity,
   FlatList
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-
-// ^ stuff we need
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-// typedef SectionProps extends PropsWithChildren?
-
-function Section({children, title}: SectionProps): React.JSX.Element { // {variable name} : {data type}
-  return (
-    <View style={styles.sectionContainer}>
-      <Text style={styles.sectionTitle}>
-        {title}
-      </Text>
-      <Text style={styles.sectionDescription}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function Logo()
-{
-  return(
-    <Image 
-      style={styles.tinyLogo}
-      source={{uri: 'https://raw.githubusercontent.com/Colorblind22/mouse-droid/main/images/MouseDoidIcon.png'}}/>
-  )
-}
-
-// maybe we make our own library file so we can share tags and stylesheets between screens
-
-/* ^ defining your own tag?
- * tuple {children, title} is type SectionProps
- * Section() returns a JSX.Element
- */
-
-/* --FORMAT--
-function name_of_screen(): JSX.Element {
-  return(
-    <View>
-    
-    <View/>
-  )
-}
-name_of_screen.options = {
-  topBar:{
-
-  }
-}
-if first
-Navigation.registerComponent('com.MouseDroid.name_of_screen', () => name_of_screen)
-fi
-*/
 
 const ExpandableNetwork = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
@@ -112,16 +55,17 @@ const ExpandableNetwork = ({ item }) => {
                   <TouchableOpacity 
                   onPress={toggleExpand}
                   style={{   
-                    width: 200, 
+                    width: 150, 
                     height: 50, 
                     paddingVertical: 5,
                     backgroundColor:'#FBB03B',
                     borderRadius: 40, }} 
                   >
                     <Text style={{
-                      paddingHorizontal: 50,
-                      fontSize: 30,
-                      color:'#fff',}}
+                      paddingHorizontal: 10,
+                      fontSize: 28,
+                      color:'#fff',
+                      textAlign:'center'}}
                     > 
                       Connect 
                     </Text>
@@ -217,35 +161,10 @@ const WelcomeScreen = (props) => {
 
         <NetworkList  data={networks} />
 
-        <View style={{ paddingLeft: 100 }}>
-          <Section>
-            <Button title="Switch to second screen"
-            onPress={() => Navigation.push(props.componentId, {
-              component:{
-                name:"TestScreen",
-              }
-            })}/>
-          </Section>
-        </View>
+        
       </View>
     </View>
   ); 
-
-
-  /*return (
-        <View>
-          <Logo/>
-          <Section title="New Section">
-            Default Screen{"\n"}
-            <Button title="Switch to second screen"
-            onPress={() => Navigation.push(props.componentId, {
-              component:{
-                name:"TestScreen",
-              }
-            })}/>
-          </Section>
-        </View>
-  ); */
 }
 WelcomeScreen.options = {
   topBar:{
@@ -253,24 +172,7 @@ WelcomeScreen.options = {
   }
 }
 
-const TestScreen = () => {
-  return(
-    <View>
-      <Logo/>
-      <Section title="Test Section">
-        Wow so awesome!
-      </Section>
-    </View>
-  )
-}
-TestScreen.options = {
-  topBar:{
-    title:{text:"This should also have changed"}
-  }
-}
-
 Navigation.registerComponent('com.MouseDroid.WelcomeScreen', () => WelcomeScreen);
-Navigation.registerComponent('com.MouseDroid.TestScreen', () => TestScreen);
  
 Navigation.events().registerAppLaunchedListener(()=>{
   Navigation.setRoot({
@@ -366,6 +268,3 @@ const styles = StyleSheet.create({
 
 
 export default WelcomeScreen;
-export {
-  TestScreen
-}
