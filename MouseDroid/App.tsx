@@ -55,7 +55,6 @@ const ExpandableNetwork = ({ item }) => {
                   <TouchableOpacity 
                   onPress={toggleExpand}
                   style={{   
-                    width: 150, 
                     height: 50, 
                     paddingVertical: 5,
                     backgroundColor:'#FBB03B',
@@ -85,27 +84,19 @@ const NetworkList = ({ data }) => {
   const [expandedId, setExpandedNetwork] = useState();
   
   return (
-    <View style={{ alignItems: 'center', paddingTop: 25, height: 450}}>
-    
+    <View style={{ alignItems: 'center', paddingTop: 25, height: 525}}>
       <FlatList 
         data={data} 
         renderItem={({ item }) => (
-
-            
-          
-            <ExpandableNetwork item={item}/>
-        
-
-          
+          <ExpandableNetwork item={item}/>
         )}
         keyExtractor={(item) => item.id.toString()} 
       /> 
-
     </View>
   );
 }
 
-const WelcomeScreen = (props) => {
+const WelcomeScreen = () => {
   // dummy data
   const [networks, setNetwork] = useState([
     {id: '1', name: 'MouseDroid_1', strength: '3'},
@@ -114,21 +105,21 @@ const WelcomeScreen = (props) => {
     {id: '4', name: 'MouseDroid_1', strength: '3'},
     {id: '5', name: 'MouseDroid_2', strength: '4' },
     {id: '6', name: 'MouseDroid_3', strength: '1' },
-    {id: '7', name: 'MouseDroid_1', strength: '3'},
-    {id: '8', name: 'MouseDroid_2', strength: '4' },
-    {id: '9', name: 'MouseDroid_3', strength: '1' },
   ]);
 
   return (
     <View style={styles.container}>
       <ImageBackground 
-        source={require('./images/Background.png')} style={styles.Background} resizeMode="repeat"
+        source={require('./images/Background.png')} style={styles.background} resizeMode="repeat"
       />
 
       <View style={styles.header}>
-        <View style={styles.pad}>
+        <View style={{ paddingHorizontal:10 }}>
           <Image
-            style={styles.icon}
+            style={{     
+              width: 75,
+              height: 75, 
+            }}
             resizeMethod='resize'
             source={require('./images/MouseDroidIcon.png')} 
           />
@@ -166,27 +157,7 @@ const WelcomeScreen = (props) => {
     </View>
   ); 
 }
-WelcomeScreen.options = {
-  topBar:{
-    title:{text:"Mouse Droid"},
-  }
-}
 
-Navigation.registerComponent('com.MouseDroid.WelcomeScreen', () => WelcomeScreen);
- 
-Navigation.events().registerAppLaunchedListener(()=>{
-  Navigation.setRoot({
-      root:{
-          stack:{
-              children:[{
-                  component:{
-                      name:'com.MouseDroid.WelcomeScreen'
-                  },
-              }]
-          }
-      }
-  });
-});
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -217,35 +188,24 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
     alignItems: 'center',
   },
-  pad: {
-    paddingHorizontal:10
-  },
-  icon: {
-    width: 75,
-    height: 75,
-  },
   header: {
     flexDirection: 'row',
     paddingTop: 30,
   },
-  Background: {
+  background: {
     width: 1200,
     height: 900,
     resizeMode: 'stretch',
     position:'absolute',
     transform: [{rotateZ: '65deg'}, {rotateY: '50deg'}]
   },
-
   boldText: {
     fontSize: 40,
     fontWeight: 'bold',
     color:'#fff',
   },
   listText: {
-    //width: 350,
-    //height: 80,
     paddingTop: 20,
-
     fontSize: 23,
     color:'#000',
   },
